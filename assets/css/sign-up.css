@@ -1,0 +1,257 @@
+.sign-up-dialog {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 32px 16px;
+    box-shadow: 0 0 14px 3px rgba(0, 0, 0, 0.04);
+    width: min(80%, 598px);
+    z-index: 3;
+}
+
+.overflow-hidden {
+    overflow-y: hidden;
+}
+
+.w-login {
+    width: min(90%, 422px);
+    padding: 0 16px;
+}
+
+.input-item {
+    position: relative;
+    margin-top: 24px;
+    width: min(90%, 422px);
+}
+
+.input-item.relative {
+    width: 100%;
+}
+
+.input-item.input-item.relative {
+    margin-bottom: 8px;
+}
+
+.input-item input {
+    padding-right: 50px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #D1D1D1;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    padding-left: 16px;
+    outline: none;
+}
+
+.input-item input::placeholder {
+    color: #d1d1d1;
+}
+
+.input-item input:focus {
+    border: 1px solid #29ABE2;
+}
+
+.input-item input.error {
+    border: 1px solid #FF001F;
+}
+
+.registration-form {
+    width: 100%;
+}
+
+.registration-data {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.input-icons {
+    position: absolute;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.form-btn {
+    border: 1px solid #2A3647;
+    background-color: #2A3647;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 4px 0;
+    border-radius: 8px;
+    width: 45%;
+    height: 51px;
+}
+
+.form-btn:hover {
+    background-color: #29ABE2;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.horizontal-line {
+    height: 3px;
+    width: 118px;
+    background-color: #29ABE2;
+    border-radius: 10px;
+}
+
+.dialog-headline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%
+}
+
+.privacy-checkbox {
+    margin: 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.privacy-checkbox input {
+    height: 16px;
+    width: 16px;
+    border-radius: 3px;
+    border: 2px solid #2A3647
+}
+
+.disabled {
+    cursor: not-allowed;
+}
+
+.disabled:hover {
+    background-color: #2A3647;
+    box-shadow: unset;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.error-msg {
+    color: #FF8190;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: 32px;
+    width: min(90%, 422px);
+    position: absolute;
+}
+
+.error-msg.small {
+    margin-bottom: unset;
+    position: absolute;
+}
+
+.msg-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    background-color: #F6F7F8;
+    transition: all 0.8s ease-in-out;
+    overflow: hidden;
+}
+
+.msg-wrapper--z-push {
+    z-index: unset;
+}
+
+.popup-msg {
+    position: absolute;
+    cursor: default;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    bottom: 0;
+    background-color: #2A3647;
+    color: #fff;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    font-size: 20px;
+    padding: 25px;
+    opacity: 0;
+    text-align: center;
+    transition: all 0.8s ease-in-out;
+    width: min(max(70%, 100px), 500px);
+    z-index: 1000;
+}
+
+.popup-msg--fade-in {
+    opacity: 1;
+    bottom: 20%;
+}
+
+.popup-msg span {
+    text-align: center;
+}
+
+.dimm {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #F6F7F8;
+}
+
+.close-btn {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-100%);
+    left: clamp(8px, 2vw + 0.25em, 48px);
+    background-color: transparent;
+    background-image: url(../img/icons/arrow-left-line.svg);
+    background-position: center;
+    height: 32px;
+    width: 32px;
+    border: none;
+}
+
+.close-btn:hover {
+    background-image: url(../img/icons/arrow-left-line-hovered.svg);
+}
+
+.sign-up-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+@media (max-height: 840px) and (max-width: 928px) {
+    .close-btn {
+        top: 70%;
+    }
+}
+
+@media (min-width: 928px) {
+    .form-btn {
+        font-size: 21px;
+    }
+}

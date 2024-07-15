@@ -1,0 +1,65 @@
+    <div id="dialog-main" class="dialog-main">
+        <div class="dialog-container">
+            <div class="dialog-content">
+                <div class="upper-card">
+                    <div class="close" onclick="closeContactModal()">
+                        <img src="./assets/img/icons/close.svg" alt="">
+                    </div>
+                    <div class="upper-card-content">
+                        <div class="join-logo-popup">
+                            <img src="./assets/img/icons/join_logo.svg" alt="">
+                        </div>
+                        <div class="upper-card-headline">
+                            <h1> Add contact</h1>
+                            <span>Tasks are better with a team!</span>
+                            <div class="seperator"></div>
+                        </div>
+                    
+                    </div>
+                
+                </div>
+                <div class="under-card">
+                    <div class="close" onclick="closeContactModal()">
+                        <img src="./assets/img/icons/close.svg" alt="">
+                    </div>
+                    <div class="profil-img">
+                        <img src="./assets/img/icons/person.svg" alt="">
+                    </div>
+                    <form class="input-information" onsubmit="createContact(event)">
+                        <div class="input-style ">
+                            <input id="input-contact-name" class="profile-img-input" pattern="^[A-Za-zÀ-ÿ]+(-[A-Za-zÀ-ÿ]+)*(\s+[A-Za-zÀ-ÿ]+(-[A-Za-zÀ-ÿ]+)*)*$" title="Please enter a full name" type="text" placeholder="Name" required>
+                        </div>
+                        <div class="input-style">
+                            <input id="input-contact-email" class="email-img-input" type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-style">
+                            <input id="input-contact-phone" class="phone-img-input" type="tel" placeholder="Phone +49" pattern="\+[0-9]{2}\s?[0-9]{3,}" title="'Please enter the phone number in the format +49 123 456 7890.'" required>
+                        </div>
+                       
+                        <div class="button-container">
+                            <button type="submit" class="contact-btn">
+                              <span> Create contact</span>
+                                <div>
+                                    <img src="./assets/img/icons/check.svg" alt="">
+                                </div>
+                            </button>
+                            <div class="contact-btn-cancel" onclick="closeContactModal()">
+                                <span> Cancel</span>
+                                  <div class="cancel-btn-symbol">
+                                      <img src="./assets/img/icons/close.svg" alt="">
+                                  </div>
+                              </div>
+                        
+                    </form>
+                    
+                </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="contact-successfully-popup">
+        <span>Contact succesfully created</span>
+    </div>
+
+    </div>

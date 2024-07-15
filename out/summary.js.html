@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: summary.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: summary.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * This function is used @summary.html to initalize everything.
+ * Todo: Get Username and start greeting, when it's saved
+ */
+function initSummary() {
+    includeHTML();
+    greetAtLogin();
+}
+
+/**
+ * Runs various functions, to use the correct greeting for users/guests.
+ * To do: Check for Login/Username...
+ */
+async function greetAtLogin() {
+    const daytime = getDaytime();
+    const greetingOverlay = document.getElementById('greeting-overlay');
+    const greetingEmbedded = document.getElementById('greeting-embedded');
+    const userInformation =  await readData(`accounts/${userId}`)
+    const greetingMsg = await generateGreetingHtml(daytime, userInformation);
+    greetingOverlay.innerHTML = greetingMsg;
+    greetingEmbedded.innerHTML = greetingMsg;
+    animateGreeting(greetingOverlay);
+}
+
+/**
+ * @returns a string with the current daytime &lt;br>&lt;br>
+ */
+function getDaytime() {
+    const currentDate = new Date();
+    const hours = currentDate.getHours();
+
+    if (isMorning(hours)) {
+        return 'morning';
+    } else if (isAfternoon(hours)) {
+        return hours === 12 ? 'noon' : 'afternoon';
+    } else if (isEvening(hours)) {
+        return 'evening';
+    } else {
+        return 'night';
+    }
+}
+
+/**
+ * @param {number} hours  new Date().getHours();
+ * @returns true (hours between 6 or up to 11) or false&lt;br>&lt;br>
+ */
+function isMorning(hours) {
+    return hours >= 6 &amp;&amp; hours &lt; 12;
+}
+
+/**
+ * @param {number} hours  new Date().getHours();
+ * @returns true (hours between 12 and up to 17) or false&lt;br>&lt;br>
+ */
+function isAfternoon(hours) {
+    return hours >= 12 &amp;&amp; hours &lt; 18;
+}
+
+/**
+ * @param {number} hours  new Date().getHours();
+ * @returns true (hours between 18 and up to 23) or false&lt;br>&lt;br>
+ */
+function isEvening(hours) {
+    return hours >= 18 &amp;&amp; hours &lt; 24;
+}
+
+/**
+ * This function controlls css classes, that are required for the login animation.
+ * @param {Element} greeting - target HTML-Element.
+ */
+function animateGreeting(greeting) {
+    greeting.classList.add('greeting-msg--mobile--fade-out');
+    document.getElementById('summary').classList.add('summary-animation--fade-in');
+    setTimeout(() => {
+        greeting.classList.add('d-none');
+    }, 1600);
+}
+
+
+async function updateBoardCounters() {
+    readData('tasks');
+}
+
+// &lt;span id="board-counter" class="summary-counter">1&lt;/span></code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#accountExists">accountExists</a></li><li><a href="global.html#animateGreeting">animateGreeting</a></li><li><a href="global.html#applyRandomColor">applyRandomColor</a></li><li><a href="global.html#autofillLogin">autofillLogin</a></li><li><a href="global.html#avatarHtml">avatarHtml</a></li><li><a href="global.html#blurListener">blurListener</a></li><li><a href="global.html#capitaliseFirstLetters">capitaliseFirstLetters</a></li><li><a href="global.html#clearLocalstorage">clearLocalstorage</a></li><li><a href="global.html#closeSignUp">closeSignUp</a></li><li><a href="global.html#compareRegistrationPasswords">compareRegistrationPasswords</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#failureAnimation">failureAnimation</a></li><li><a href="global.html#focusListener">focusListener</a></li><li><a href="global.html#forceLogout">forceLogout</a></li><li><a href="global.html#generateGreetingHtml">generateGreetingHtml</a></li><li><a href="global.html#getCurrentFileName">getCurrentFileName</a></li><li><a href="global.html#getDaytime">getDaytime</a></li><li><a href="global.html#greetAtLogin">greetAtLogin</a></li><li><a href="global.html#handleCheckBox">handleCheckBox</a></li><li><a href="global.html#hideMenu">hideMenu</a></li><li><a href="global.html#hideWindow">hideWindow</a></li><li><a href="global.html#initIndex">initIndex</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initials">initials</a></li><li><a href="global.html#isAfternoon">isAfternoon</a></li><li><a href="global.html#isEvening">isEvening</a></li><li><a href="global.html#isMorning">isMorning</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#openListSearch">openListSearch</a></li><li><a href="global.html#openSignUp">openSignUp</a></li><li><a href="global.html#openSubtaskInput">openSubtaskInput</a></li><li><a href="global.html#passwordInputIcon">passwordInputIcon</a></li><li><a href="global.html#passwordInputMissmatch">passwordInputMissmatch</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#readData">readData</a></li><li><a href="global.html#regularMenuPoint">regularMenuPoint</a></li><li><a href="global.html#resetInputFields">resetInputFields</a></li><li><a href="global.html#setFocus">setFocus</a></li><li><a href="global.html#setMyAvatar">setMyAvatar</a></li><li><a href="global.html#setPasswordCreateDesign">setPasswordCreateDesign</a></li><li><a href="global.html#setPasswordDesign">setPasswordDesign</a></li><li><a href="global.html#setPasswordValidationDesign">setPasswordValidationDesign</a></li><li><a href="global.html#setPriorityTo">setPriorityTo</a></li><li><a href="global.html#setupListener">setupListener</a></li><li><a href="global.html#signUpAnimation">signUpAnimation</a></li><li><a href="global.html#stopPropagation">stopPropagation</a></li><li><a href="global.html#submitSignUp">submitSignUp</a></li><li><a href="global.html#successAnimation">successAnimation</a></li><li><a href="global.html#togglePasswordDesign">togglePasswordDesign</a></li><li><a href="global.html#togglePrivacy">togglePrivacy</a></li><li><a href="global.html#toggleRemember">toggleRemember</a></li><li><a href="global.html#toggleThis">toggleThis</a></li><li><a href="global.html#toggleVisibility">toggleVisibility</a></li><li><a href="global.html#updateMenu">updateMenu</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Wed Jul 03 2024 15:28:18 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

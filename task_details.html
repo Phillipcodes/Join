@@ -1,0 +1,146 @@
+<div id="task-card-wrapper" class="task-card-wrapper" onclick="closeDetails();">
+    <section id="task-details-view" class="task-card-view d-none" onclick="stopPropagation(event)">
+        <div class="details__header">
+            <span id="task-details-tag"></span>
+            <div class="close-btn" onclick="closeDetails()"></div>
+        </div>
+        <div class="scrollbar-wrapper">
+            <div class="details__title-wrapper">
+                <h1 id="task-details-title" class="details__title"></h1>
+                <div class="description-wrapper">
+                    <p id="task-details-description" class="details__description"></p>
+                </div>
+            </div>
+            <div class="details__info-box">
+                <strong class="details__caption">Due date:</strong>
+                <span id="task-details-date" class="details__information"></span>
+            </div>
+            <div class="details__info-box">
+                <strong class="details__caption">Priority:</strong>
+                <div class="details__priority-wrapper">
+                    <span id="details-priority-text" class="details__information"></span>
+                    <img id="details-priority-img" class="priority-icon" src="" alt="">
+                </div>
+            </div>
+            <div class="details__info-box vertical">
+                <strong class="details__caption">Assigned To:</strong>
+                <div id="details-assigned-list" class="details__vertical-wrapper">
+                </div>
+            </div>
+            <div class="details__info-box vertical">
+                <strong class="details__caption">Subtasks:</strong>
+                <div id="details-subtasks-list" class="details__vertical-wrapper"></div>
+            </div>
+        </div>
+        <div class="details__bottom">
+            <div class="icon-box" id="delete">
+                <button id="task-details-delete-btn" class="task-link details__information">
+                    <img src="./assets/img/icons/delete.svg" alt="">
+                    <span>Delete</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <div class="icon-box" id="edit">
+                <div class="edit-icon"></div>
+                <button id="task-details-edit-btn" class="task-link details__information">
+                    <img src="./assets/img/icons/edit.svg" alt="">
+                    <span>Edit</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Start of Second Part -->
+
+    <section id="task-edit-view" class="task-card-view d-none" onclick="resetInputFields();stopPropagation(event);">
+        <div class="details__header titleless">
+            <div class="close-btn" onclick="closeDetails()">
+            </div>
+        </div>
+        <div id="edit-view-scrollbar" class="scrollbar-wrapper">
+            <div class="details__title-wrapper edit">
+                <strong class="details__caption">Title:</strong>
+                <input id="update-title" type="text" class="details__title edit this-entry"
+                    value="CSS Architecture Planning">
+            </div>
+            <div class="details__info-box edit">
+                <strong class="details__caption">Description</strong>
+                <textarea id="update-description" class="edit this-entry"
+                    style="resize: vertical; min-height: 100px; max-height: 120px;"></textarea>
+            </div>
+            <div class="details__info-box edit">
+                <strong class="details__caption">Due date:</strong>
+                <div class="date-box">
+                    <input id="update-date" type="date" class="details__information edit this-entry date-input">
+                </div>
+            </div>
+            <div class="details__info-box edit">
+                <strong class="details__caption">Priority:</strong>
+                <div class="details__priority-wrapper edit">
+                    <div id="edit-priority-btn-urgent" class="simple-btn task-priority urgent"
+                        onclick="setPriorityTo(2)">
+                        <span>Urgent</span>
+                        <div class="urgent-img"></div>
+                    </div>
+                    <div id="edit-priority-btn-medium" class="simple-btn task-priority medium"
+                        onclick="setPriorityTo(1)">
+                        <span>Medium</span>
+                        <div class="medium-img"></div>
+                    </div>
+                    <div id="edit-priority-btn-low" class="simple-btn task-priority low" onclick="setPriorityTo(0)">
+                        <span>Low</span>
+                        <div class="low-img"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="details__info-box vertical">
+                <strong class="details__caption">Assigned To:</strong>
+                <div id="details-assigned-list" class="details__info-box vertical">
+                    <div id="edit-task-contact-list-btn" class="list-btn"
+                        onclick="openListSearch('edit');stopPropagation(event);">
+                        <span id="details-edit-assigned-btn" class="list-btn__btn-text">Select contacts to
+                            assign</span>
+                        <div class="list-icon collapse"><img src="./assets/img/icons/collapse_true.svg" alt="">
+                        </div>
+                    </div>
+                    <div id="edit-task-contact-list-input" class="list-btn focus d-none"
+                        onclick="stopPropagation(event);">
+                        <input id="edit-task-list-input-field" class="list-btn__input-field"
+                            oninput="searchContact(this.value)" type="text">
+                        <div class="list-icon collapse"><img src="./assets/img/icons/collapse_false.svg" alt=""
+                                onclick="resetInputFields()"></div>
+                    </div>
+                    <section id="edit-task-contacts-list" class="edit-task-contact-list d-none"
+                        onclick="stopPropagation(event)">
+                    </section>
+                    <div id="edit-task-view-assigned-persons" class="details__inner edit assigned">
+                    </div>
+                </div>
+            </div>
+            <div class="details__info-box vertical mb-8">
+                <strong class="details__caption">Subtasks:</strong>
+                <form id="edit-subtask-box" class="details-subtask-box" onsubmit="addNewSubtask(document.getElementById('edit-add-subtask').value);scrollToLastSubtask();return false;">
+                    <input type="text" id="edit-add-subtask" class="details-subtask-add" placeholder="Add new subtask">
+                    <div id="edit-view-subtask-add" class="cross blue" onclick="setFocus('edit')"></div>
+                    <div id="edit-view-subtask-navigation" class="edit-subtask-navigation d-none"
+                        onclick="stopPropagation(event);">
+                        <div class="link-btn discard-btn" onclick="discardNewSubtask()"></div>
+                        <img class="vertical-line" src="./assets/img/icons/vertical-line.svg" alt="" class="">
+                        <div class="link-btn accept-btn"
+                            onclick="addNewSubtask(document.getElementById('edit-add-subtask').value);scrollToLastSubtask();blurListener();">
+                        </div>
+                    </div>
+                </form>
+                <div id="edit-subtask-item-wrapper" style="width: 100%">
+                </div>
+            </div>
+        </div>
+        <div class="details__bottom">
+            <div id="save-task-update" class="simple-btn small">
+                <span class="">Ok</span>
+                <img src="./assets/img/icons/check_white.svg" alt="">
+            </div>
+            <img src="" alt="">
+        </div>
+    </section>
+</div>

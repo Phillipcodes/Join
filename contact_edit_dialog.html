@@ -1,0 +1,62 @@
+
+    <div class="dialog-main">
+        <div class="dialog-container">
+            <div class="dialog-content">
+                <div class="close desktop" onclick="closeContactModal()">
+                    <img src="./assets/img/icons/close.svg" alt="">
+                </div>
+                <div class="upper-card">
+                    <div class="close mobile" onclick="closeContactModal()">
+                        <img src="./assets/img/icons/close.svg" alt="">
+                    </div>
+                    <div class="upper-card-content">
+                        <div class="join-logo-popup">
+                            <img src="./assets/img/icons/join_logo.svg" alt="">
+                        </div>
+                        <div class="upper-card-headline">
+                            <h1> Edit contact</h1>
+                       
+                            <div class="seperator"></div>
+                        </div>
+                    
+                    </div>
+                
+                </div>
+                <div class="under-card">
+                    <div id="profile-img" class="profil-img">
+                        <span id="first-letters">AM</span>
+                      </div>
+                    <form class="input-information" id="form" onsubmit="editContact(event)">
+                        <div class="input-style ">
+                            <input id="name-input" class="profile-img-input" pattern="^[A-Za-zÀ-ÿ]+(-[A-Za-zÀ-ÿ]+)*(\s+[A-Za-zÀ-ÿ]+(-[A-Za-zÀ-ÿ]+)*)*$" title="Please enter a full name" type="name" placeholder="Name" pattern="^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-]+$" title="Please enter a valid name" required>
+                        </div>
+                        <div class="input-style">
+                            <input id="email-input" class="email-img-input" type="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-style">
+                            <input id="phone-input" class="phone-img-input" type="tel" placeholder="Phone"  pattern="\+[0-9]{2}\s?[0-9]{3,}" title="'Please enter the phone number in the format +49 123 456 7890.'" required>
+                        </div>
+                       
+                        <div class="button-container">
+                            <div class="contact-delete-btn" onclick="deleteContact(`contacts/${contactToEditId}`, `${contactToEditId}`)">
+                                <span>Delete</span>
+                            </div>
+                            <button type="submit" class="contact-save-btn">
+                                <span> Save</span>
+                                  <div>
+                                      <img src="./assets/img/icons/check.svg" alt="">
+                                  </div>
+                                </button>
+                        </div>
+                        
+                    </form>
+                    
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+
+    </div>

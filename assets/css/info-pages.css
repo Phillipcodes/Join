@@ -1,0 +1,121 @@
+.header__placeholder {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    background-color: #fffffe;
+    z-index: 1;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    margin-top: 128px;
+    margin-bottom: 128px;
+    cursor: default;
+}
+
+.main--no-account {
+    margin-bottom: 24px !important;
+}
+
+.headline-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.back-btn {
+    background-image: url('../img/icons/arrow-left-line.svg');
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: none;
+    background-color: transparent;
+}
+
+.back-btn:hover {
+    background-image: url('../img/icons/arrow-left-line-hovered.svg');
+    width: 32px;
+    height: 32px;
+}
+
+.legal {
+    margin-block: 0;
+}
+
+.nav-menu--side {
+    display: none;
+}
+
+.nav-menu--bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 80px;
+    background-color: #2A3647;
+}
+
+.content {
+    padding: 0 16px 0 16px;
+}
+
+.article-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 64px;
+}
+
+.list--sorted {
+    display: flex;
+    gap: 24px;
+}
+
+.list-number {
+    font-size: 27px;
+    font-weight: 700;
+    min-width: 32px;
+}
+
+.article {
+    display: flex;
+    flex-direction: column;
+}
+
+.article p {
+    font-weight: 400;
+    font-size: 16px;
+    margin-block: 0;
+}
+
+.subheadline {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+
+/* Change to Desktop-Resulution*/
+@media (min-width: 1160px) {
+
+    main {
+        margin-left: 232px;
+        margin-bottom: 80px;
+        max-width: calc(1920px - 232px);
+        max-height: calc(1080px - 128px);
+    }
+
+    .content {
+        padding: 0 32px 24px 64px;
+    }
+
+    .back-btn {
+        margin-right: 32px;
+    }
+}

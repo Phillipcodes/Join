@@ -1,0 +1,408 @@
+body {
+  margin: 0;
+  font-family: inter;
+  background-color: #f6f7f8;
+}
+
+input,
+textarea,
+select {
+  font-size: clamp(16px, 2vw, 20px);
+}
+
+.mobile-body {
+  overflow-x: hidden;
+}
+
+.dialog-main-container span {
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 400;
+  color: #2A3647;
+}
+
+.red {
+  color: #ff8190 !important;
+  font-weight: 400;
+}
+
+.dialog-bg {
+  height: 100vh;
+  background-color: aqua;
+}
+
+.dialog-main-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  transition: all 225ms ease-in-out;
+  transform: translateX(100%);
+  top: 0;
+  left: 0;
+  display: none;
+}
+
+.transition-right {
+  transform: translateX(0);
+}
+
+
+
+#close-btn {
+  position: absolute;
+  top: 64px;
+  left: 1044px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+#select-category {
+  cursor: pointer;
+  width: 320px;
+}
+
+#edit-subtask-box-dialog {
+  width: 364px !important;
+}
+
+.dialog-container {
+  width: 1116px;
+  height: 870px;
+  background-color: white;
+  border-radius: 30px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.headline-add-task {
+  width: 428px;
+  height: 112px;
+  display: flex;
+  align-items: center;
+  padding: 20px 16px 8px;
+  line-height: 56.4px;
+  text-align: left;
+  padding-left: 76px;
+}
+
+.headline-add-task h1 {
+  font-size: clamp(47px, 2vw, 61px);
+  font-weight: 700;
+}
+
+.add-task-container {
+  width: 396px;
+  height: 633px;
+  padding: 0 16px;
+  height: 100%;
+  width: 100%;
+  margin-top: 38px;
+  padding-left: 76px;
+}
+
+.flex-column-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mb-32 {
+  margin-bottom: 32px;
+}
+
+.input-standard {
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  padding: 10px 21px;
+}
+
+.date-standard {
+  padding: 8px 21px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+}
+
+input:focus {
+  outline-color: #29abe2;
+}
+
+input::placeholder {
+  color: #d1d1d1;
+  font-family: inter;
+  font-weight: 400;
+}
+
+textarea::placeholder {
+  color: #d1d1d1;
+  font-family: inter;
+  font-weight: 400;
+}
+
+textarea:focus {
+  outline-color: #29abe2;
+}
+
+.description-textarea {
+  padding: 18px 21px;
+  border: 1px solid #d1d1d1;
+  border-radius: 10px;
+  max-width: 350px;
+  max-height: 125px;
+  font-family: inter;
+}
+
+select:focus {
+  outline-color: #29abe2;
+}
+
+.prio-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 440px;
+}
+
+.prio-content {
+  display: flex;
+  gap: 16px;
+  font-size: clamp(16px, 2vw, 20px);
+}
+
+.prios {
+  width: 100px;
+  padding: 18px 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 4px 0px #00000031;
+  line-height: 19.2px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  background-color: white;
+  user-select: none;
+}
+
+.prios:hover {
+  box-shadow: 0px 4px 4px 0px #00000025;
+}
+
+.prio-medium {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(97%) saturate(902%)
+    hue-rotate(360deg) brightness(103%) contrast(101%);
+}
+
+.create-task-panel {
+  height: 88px;
+  padding: 16px 16px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-evenly;
+  position: fixed;
+  top: 740px;
+}
+
+.create-task-panel span {
+  font-size: 20px;
+}
+
+.create-task-btn {
+  background-color: #2a3647;
+  padding: 16px;
+  border-radius: 10px;
+  color: white;
+  font-size: 21px;
+  line-height: 25px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  align-items: center;
+  user-select: none;
+}
+
+.create-task-btn:hover {
+  background-color: #29abe2;
+}
+
+.desktop-seperator-add-contact {
+  height: 424px;
+  border: 1px solid #d1d1d1;
+  display: none;
+}
+
+.desktop-buttons {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding-left: 58px;
+  display: none;
+  width: 334px;
+  margin-top: 142px;
+}
+
+.clear-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  border: 1px solid #2a3647;
+  height: 56px;
+  width: 110px;
+  border-radius: 10px;
+  cursor: pointer;
+  gap: 6px;
+}
+
+.clear-btn:hover {
+  color: #29abe2;
+  border: 1px solid #29abe2;
+}
+
+.clear-btn:hover img {
+  filter: brightness(0) saturate(100%) invert(64%) sepia(56%) saturate(2707%)
+    hue-rotate(165deg) brightness(94%) contrast(88%);
+}
+
+.clear-btn img {
+  filter: brightness(0) saturate(100%) invert(16%) sepia(48%) saturate(414%)
+    hue-rotate(176deg) brightness(93%) contrast(89%);
+}
+
+.desktop-buttons {
+  display: flex;
+}
+
+.form-add-task {
+  overflow-x: unset;
+  overflow-y: unset;
+  height: 100%;
+  display: flex;
+  gap: 48px;
+  width: 100%;
+  height: 85%;
+}
+
+input,
+textarea {
+  width: 356px;
+}
+
+select {
+  width: 400px;
+}
+
+.create-task-panel {
+  display: none;
+}
+.desktop-seperator-add-contact {
+  display: block;
+}
+
+.prios {
+  width: 136px;
+}
+
+.drop-menu-dialog {
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+  width: 364px;
+  height: 216px;
+  overflow-y: auto;
+  border-radius: 10px;
+  
+}
+
+.drop-menu-dialog ul {
+  font-size: 16px;
+}
+
+.display-contacts-pictures-dialog {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+
+#contacts-show-input {
+  width: 320px;
+}
+
+
+.required-text {
+  top: 779px;
+  left: 74px;
+  position: absolute;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.pressed-color-orange {
+  background-color: #FF3D00;
+  font-weight: 700;
+  color: white;
+
+}
+
+.pressed-prio-img {
+  filter: brightness(0) saturate(100%) invert(99%) sepia(0%) saturate(7497%) hue-rotate(222deg) brightness(101%) contrast(101%)
+}
+
+.pressed-color-yellow {
+  background-color: #FFA800;
+  font-weight: 700;
+  color: white;
+}
+
+.pressed-color-green {
+  background-color: #7AE229;
+  font-weight: 700;
+  color: white;
+}
+
+.dialog-padding {
+  padding: 16px 100px;
+}
+
+.dialog-padding input,   textarea {
+  width: 320px !important;
+}
+
+.dialog-padding select {
+  width: 364px !important;
+}
+
+.dialog-padding #assigned-to-contact {
+  width: 320px !important;
+}
+
+.dialog-padding .prio-container  {
+  width: 364px;
+}
+
+.dialog-button-fixed {
+  position: absolute;
+    top: 754px;
+    margin: 0;
+}
+
+.ul-row-styling {
+  font-size: 16px !important;
+}
+
+.drop-menu {
+  height: 220px !important;
+}
+
+.profile-initials-circle-line {
+  width: 32px !important ;
+}
+
+@media (min-width: 1160px) {
+  .dialog-main-container {
+    display: flex;
+  }
+}

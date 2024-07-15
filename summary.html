@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join - Summary</title>
+    <link rel="stylesheet" href="./assets/css/fonts.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/summary.css">
+    <link rel="stylesheet" href="./assets/css/menu-bar.css">
+    <link rel="stylesheet" href="./assets/css/menu-bar_media-querys.css">
+    <link rel="icon" type="image/svg+xml" href="./assets/img/icons/favicon.svg">
+    <!-- <link rel="icon" type="image/x-icon" href="./assets/img/icons/favicon.svg"> -->
+    <link rel="icon" type="image/png" sizes="48x48" href="./assets/img/icons/favicon-48x48.png">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="152x152" href="./assets/img/icons/favicon-152x152.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="./assets/img/icons/favicon-167x167.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/icons/favicon-180x180.png">
+    <!-- Safari Pinned Tab -->
+    <link rel="mask-icon" href="./assets/img/icons/favicon.svg" color="#5bbad5">
+    <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/summary.js"></script>
+    <script src="./assets/js/menu-bar-script.js"></script>
+</head>
+
+<body onload="initSummary()">
+    <nav w3-include-html="./assets/templates/menu-bar.html" id="nav-menu-side">
+    </nav>
+
+    <main id="main-wrapper" class="main-mb main-pl">
+        <section id="greeting-overlay" class="greeting-msg--mobile">
+
+        </section>
+        <section id="summary" class="content summary-content">
+            <div class="join-360">
+                <h1>Join 360</h1>
+                <div class="join-360 vertical-line"></div>
+                <span class="subtitle">Key Metrics at a Glance</span>
+            </div>
+
+            <div class="summary-wrapper">
+                <section class="summary">
+                    <div class="summary-top">
+                        <div id="tasks-to-do" class="summary-card summary-todo summary-card--medium">
+                            <div class="task-counter--design">
+                                <div class="icon-wrapper todo-icon"></div>
+                                <div id="todo-counter-box" class="task-counter">
+                                    <span id="todo-counter" class="summary-counter"></span>
+                                    <span class="counter-description">To-do</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tasks-done" class="summary-card summary-done summary-card--medium">
+                            <div class="task-counter--design">
+                                <div class="icon-wrapper done-icon"></div>
+                                <div id="done-counter-box" class="task-counter">
+                                    <span id="done-counter" class="summary-counter"></span>
+                                    <span class="counter-description">Done</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-urgent">
+                        <div id="tasks-urgent" class="summary-card summary-card--large">
+                            <div class="task-counter--design">
+                                <div class="icon-wrapper urgent-icon"></div>
+                                <div id="urgent-counter-box" class="task-counter">
+                                    <span id="urgent-counter" class="summary-counter"></span>
+                                    <span class="counter-description">Urgent</span>
+                                </div>
+                            </div>
+                            <img src="./assets/img/icons/vertical-line.svg" alt="" class="vertical-line">
+                            <div id="deadlines" class="deadline-box">
+                                <span id="deadline-date" class="deadline-date"></span>
+                                <span id="deadline-description" class="deadline-description"></span>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-bottom">
+                        <div id="tasks-in-board" class="summary-card summary-card--small">
+                            <span id="board-counter" class="summary-counter"></span>
+                            <span class="counter-description">Tasks in<br>Board</span>
+                        </div></a>
+                        <div id="tasks-in-progress" class="summary-card summary-card--small">
+                            <span id="progress-counter" class="summary-counter"></span>
+                            <span class="counter-description">Tasks in<br>Progress</span>
+                        </div>
+                        <div id="tasks-awaiting-feedback" class="summary-card summary-card--small">
+                            <span id="feedback-counter" class="summary-counter"></span>
+                            <span class="counter-description">Awaiting<br>Feedback</span>
+                        </div>
+                    </div>
+                </section>
+                <section id="greeting-embedded" class="greeting-msg--desktop">
+
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <!-- <section id="nav-menu-bottom" class="nav-menu--bottom"></section> -->
+
+</body>
+
+</html>

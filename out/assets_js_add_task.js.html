@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: assets/js/add_task.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: assets/js/add_task.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let addTaskAssignedContacts = [];
+let addTaskPrio = "Medium";
+let addTaskCategory = "";
+let taskStatus = "todo";
+let alreadyOpen = false;
+pressedButton = 0;
+previousButton = 3;
+styledCheckbox = [];
+
+/**
+ * Initializes necessary functions to ensure proper display and form validation.
+ * This includes importing HTML content, rendering the contact list,
+ * preventing form submission on Enter key press,
+ * setting up listeners for adding tasks, and enabling Enter key functionality for subtasks.
+ */
+function init() {
+  includeHTML();
+  renderContactList();
+  stopEnterForm ();
+  setupListenerForAddTasks();
+  addEntertoSubTasks ();
+  onStartSelectMediumPrio()
+  catgeoryClickOutsideclose()
+  setDateMin() 
+}
+
+
+/**
+ * sets the low pro button to always selected at start.
+ */
+function onStartSelectMediumPrio() {
+  document.getElementById("medium-prio").classList.add("pressed-color-yellow"); // Update class for medium priority
+  document.getElementById("medium-prio-img").classList.add("pressed-prio-img"); // Update class for medium priority
+}
+
+/**
+ * 
+ * @param {HTMLInputElement} checkbox - Contains the value of the checked element from the form tag with the id="form-desktop"
+ * @param {string}  idNumber - gives the path back of an object
+ */
+function handleCheckBox(checkbox, idNumber) {
+  if (checkbox.checked) {
+    if (!addTaskAssignedContacts.includes(checkbox.value)) {
+      addTaskAssignedContacts.push(checkbox.value);
+      styledCheckbox.push(idNumber);
+    }
+    pressedCheckBoxStyle(idNumber);
+  } else {
+    const valueIndex = addTaskAssignedContacts.indexOf(checkbox.value);
+    if (valueIndex > -1) {
+      addTaskAssignedContacts.splice(valueIndex, 1);
+    }
+    unPressedCheckBoxStyle(idNumber);
+  }
+  generateCircleProfilesLine(idNumber);
+}
+
+
+/**
+ * Implements the styling of the checkboxes when pressed.
+ * @param {string} idNumber - The path identifier of an object.
+ */
+function pressedCheckBoxStyle(idNumber) {
+  document.getElementById(`label-check${idNumber}`).classList.add('filter-to-white')
+  document.getElementById(`background-drop-menu-background${idNumber}`).classList.remove('ul-content-wrapper-no-click')
+  document.getElementById(`background-drop-menu-background${idNumber}`).classList.add('pressed-drop-box-bg-color');
+
+}
+
+
+/**
+ * removes the checkbox styling after uncheck them
+ * @param {*} idNumber 
+ */
+function unPressedCheckBoxStyle(idNumber) {
+  document.getElementById(`label-check${idNumber}`).classList.remove('filter-to-white')
+  document.getElementById(`background-drop-menu-background${idNumber}`).classList.add('ul-content-wrapper-no-click')
+  document.getElementById(`background-drop-menu-background${idNumber}`).classList.remove('pressed-drop-box-bg-color');
+
+}
+
+
+/**
+ * Toggles the visibility of the contact drop-down menu.
+ * @param {boolean} [forcedClose=false] - Flag indicating if the drop-down should be forcefully closed.
+ */
+
+function toggleContactDropBox(forcedClose = false) {
+  if (!alreadyOpen &amp;&amp; forcedClose === false) {
+    document.getElementById('contacts-drop-menu').classList.remove('d-none');
+    document.getElementById('required-text-span').classList.add('d-none');
+    document.getElementById('contact-input-wrapper').classList.add('d-none');
+    document.getElementById('contacts-show-input').classList.remove('d-none');
+    alreadyOpen = true
+  } else {
+    document.getElementById('contacts-drop-menu').classList.add('d-none');
+    document.getElementById('required-text-span').classList.remove('d-none');
+    document.getElementById('contact-input-wrapper').classList.remove('d-none');
+    document.getElementById('contacts-show-input').classList.add('d-none');
+    alreadyOpen = false
+  }
+}
+
+
+/**
+ * Clears the inputs in the form with the id 'form-desktop' and prevents the form's standard validation
+ * with a timeout to ensure the site is not reloaded.
+ * 
+ * @param {Event} event - The event object triggered when the form is submitted.
+ */
+function clearInputs(event) {
+  event.preventDefault()
+  let form = document.getElementById('form-desktop')
+  form.setAttribute('novalidate', true);
+
+  setTimeout(() => {
+    form.removeAttribute('novalidate', false);
+  }, 100);
+  form.reset();
+ 
+}
+
+/**
+ * Removes the standard validation message
+ * @param {Event} event 
+ */
+
+function stopStandardValidationMessage(event) {
+  event.preventDefault()
+  let form = document.getElementById('form-desktop')
+  form.setAttribute('novalidate', true);
+  setTimeout(() => {
+    form.removeAttribute('novalidate', false);
+  }, 100);
+}
+
+
+/**
+ * Calls all clear functions to ensure the clear button clears everything including styling.
+ * 
+ * @param {Event} event - The event object triggered when the clear button is clicked.
+ */
+function clearForm (event) {
+  clearInputs(event);
+  clearFormPrio();
+  clearFormContactStyle();
+  clearSubtasksContainer();
+  if (window.location.pathname === '/board.html')  {
+    clearSubtasksContainerDialog()
+  }
+ 
+}
+
+
+/**
+ * Clears the form styling after pressing the clear button 
+ */
+
+function clearFormPrio() {
+ pressedButton = 0;
+ previousButton = 0;
+ addTaskPrio = 'Low';
+ const priorities = ["urgent", "medium", "low"];
+ const colors = ["orange", "yellow", "green"];
+ 
+ priorities.forEach((priority, index) => {
+   document.getElementById(`${priority}-prio`).classList.remove(`pressed-color-${colors[index]}`);
+   document.getElementById(`${priority}-prio-img`).classList.remove("pressed-prio-img");
+ });
+
+}
+
+
+/**
+ * Clears the checkbox styles and resets the associated values after removing them.
+ */
+
+function clearFormContactStyle() {
+  styledCheckbox.forEach(checkboxId => {
+    const label = document.getElementById(`label-check${checkboxId}`);
+    const background = document.getElementById(`background-drop-menu-background${checkboxId}`);
+    if (label) {
+      label.classList.remove('filter-to-white');
+    }
+    if (background) {
+      background.classList.add('ul-content-wrapper-no-click');
+      background.classList.remove('pressed-drop-box-bg-color');
+    }
+  });
+  document.getElementById('contacts-img-line').innerHTML = "";
+  addTaskAssignedContacts = [];
+  styledCheckboxes = [];
+}
+
+
+/**
+ * Converts an array into an object where array values become object properties.
+ * @param {array} array The array to be converted into an object.
+ * @returns {object} The resulting object with numeric indices as keys.
+ */
+function convertArrayToObject(array) {
+  let obj = {};
+  array.forEach((value, index) => {
+    obj[index] = value;
+  });
+  return obj;
+}
+
+
+/**
+ * Posts a new task to the backend.
+ * Collects task data from form inputs and sends it via POST request to the backend API.
+ * @returns {Promise&lt;void>} A promise that resolves when the task is successfully posted.
+ */
+async function addnewTask() {
+  const addTaskSubTask = createSubtasks();
+  let assignedContactsObject = convertArrayToObject(addTaskAssignedContacts);
+
+  await postData({
+    'title': document.getElementById('task-title').value,
+    'description': document.getElementById('task-description').value,
+    'assigned': assignedContactsObject,
+    'date': isNotInPast(document.getElementById('task-due-date').value),
+    'priority': addTaskPrio,
+    'tag': addTaskCategory,
+    'subtasks': createSubtasks(),
+    'status': taskStatus,
+  }, 'tasks');
+}
+
+
+/**
+ * Checks if the form is completely filled and validates whether the form is ready to submit or not.
+ * If all required fields are filled and a category is selected, the new task is added, a success popup is shown,
+ * and the form is cleared.
+ * If not all required fields are filled or no category is selected, standard form validation messages are stopped,
+ * custom validation is performed, and category field is checked.
+ * @param {Event} event The event object, typically from a form submission.
+ */
+function checkIfFormFilled(event) {
+  const form = document.getElementById("form-desktop");
+  const requiredFields = form.querySelectorAll("[required]");
+  let allFilled = true;
+  requiredFields.forEach((field) => {
+    if (!field.value.trim()) {
+      allFilled = false;
+    }
+  });
+  const selectedCategory = document.getElementById("selected-category");
+  if (selectedCategory.textContent.trim() === "Select category") {
+    allFilled = false;
+  }
+  if (allFilled) {
+    allFilledTrue(event);
+  } else {
+    allFilledFalse(event);
+  }
+}
+
+
+/**
+ * When allfilled is true this function will trigger
+ * @param {Event} event 
+ */
+function allFilledTrue(event) {
+  addnewTask(event);
+  showPopupTaskAdded();
+  clearForm(event);
+}
+
+
+/**
+ * When allfilled is false this function will trigger
+ * @param {Event} event 
+ */
+function allFilledFalse(event) {
+  stopStandardValidationMessage(event);
+    ownValidation();
+    checkCategoryfield ();
+}
+
+
+/**
+ * Sets the priority of a task and updates its visual styling when clicked.
+ * Clears previous selections and applies the selected priority and its corresponding color.
+ * @param {string} prio- The priority level, one of "urgent", "medium", or "low".
+ * @param {number} number - number The index of the priority button clicked to determine which priority to set
+ */
+function setPrio(prio, number) {
+  const priorities = ["urgent", "medium", "low"];
+  const colors = ["orange", "yellow", "green"];
+  priorities.forEach((priority, index) => {
+    document.getElementById(`${priority}-prio`).classList.remove(`pressed-color-${colors[index]}`);
+    document.getElementById(`${priority}-prio-img`).classList.remove("pressed-prio-img");
+  });
+  addTaskPrio = prio;
+  previousButton = number;
+  if (previousButton > 0 &amp;&amp; previousButton &lt;= priorities.length) {
+    const currentPriority = priorities[previousButton - 1];
+    const currentColor = colors[previousButton - 1];
+    document.getElementById(`${currentPriority}-prio`).classList.add(`pressed-color-${currentColor}`);
+    document.getElementById(`${currentPriority}-prio-img`).classList.add("pressed-prio-img");
+  }
+}
+
+
+/**
+ * Display the successfully created a task pop-up with a little animation
+ */
+
+function showPopupTaskAdded() {
+  const popup = document.getElementById('pop-up-transition'); 
+
+  popup.style.display = "flex";
+  setTimeout(() => {
+    popup.classList.add('form-down-to-up-transition');
+
+    setTimeout(() => {
+      popup.classList.remove('form-down-to-up-transition');
+      popup.style.display = "none";
+      window.location.href = 'board.html';
+    }, 1000);
+  }, 100);
+}
+
+
+/**
+ * Fetches contact and account data from the backend, processes it, and renders
+ * the contact list in the drop-box.
+ */
+async function renderContactList() {
+  let contacts = await readData('contacts');
+  contacts = setPrefixToKey('contacts', contacts);
+  let accounts = await readData('accounts');
+  accounts = setPrefixToKey('accounts', accounts);
+  let data = {}; await Object.assign(data, accounts, contacts);
+  let entries = sortByAlphabet(data);
+  let dataKeys = Object.keys(data);
+  for (let i = 0; i &lt; entries.length; i++) {
+    generateDropBoxContacts(entries[i], dataKeys[i]);
+  }
+}
+
+
+/**
+ * Filters contact elements based on the search term and toggles their visibility.
+ * Elements with class 'group-pb-cricle-with-name' are iterated over and displayed
+ * based on whether their text content matches the search term.
+ * 
+ * @param {string} search The search term to filter contact elements.
+ */
+function searchContact(search) {
+  const contactNames = Array.from(document.querySelectorAll('div.group-pb-cricle-with-name'));
+  contactNames.forEach(item => {
+    const contactName = item.textContent.trim().toLowerCase();
+    const isVisible = contactName.includes(search.toLowerCase());
+    hideWindow(item.parentElement.id, !isVisible);
+  });
+}
+
+/**
+ * Open or close the category drop-box when clicked
+ */
+ function toggleCategoryDropBox() {
+  if (!alreadyOpen) {
+    document.getElementById('arrow').classList.remove('rotation-back');
+    document.getElementById('category-drop-menu').classList.remove('d-none');
+    document.getElementById('arrow').classList.add('rotation');
+    document.getElementById('select-category').classList.remove('d-none');
+    alreadyOpen = true
+  } else {
+    document.getElementById('category-drop-menu').classList.add('d-none');
+    document.getElementById('arrow').classList.remove('rotation');
+    document.getElementById('arrow').classList.add('rotation-back');
+    checkCategoryfield()
+    alreadyOpen = false
+  }
+}
+
+
+/**
+ * Sets the selected category for the task and updates the displayed category text.
+ * Closes the category drop-down box after selection.
+ * 
+ * @param {string} category - The category selected for the task.
+ */
+function selectCategory (category) {
+  addTaskCategory = category;
+  document.getElementById('selected-category').textContent = `${category}`;
+  toggleCategoryDropBox();
+}
+
+
+/**
+ * checks the category field because it can't have the required tag but is required for the form to be filled.
+ */
+  function checkCategoryfield () {
+    const selectCategoryDiv = document.getElementById('category-input-wrapper');
+      const selectedCategory = selectCategoryDiv.innerText.trim();
+      if (selectedCategory !== 'Technical Task' &amp;&amp; selectedCategory !== 'User Story') {
+          if (!selectCategoryDiv.parentNode.querySelector('.error-message')) {
+              const errorMessage = document.createElement('span');
+              errorMessage.textContent = 'This field ist required.';
+              errorMessage.classList.add('error-message');
+              selectCategoryDiv.parentNode.appendChild(errorMessage);
+          }
+      } else {
+          const errorMessage = selectCategoryDiv.parentNode.querySelector('.error-message');
+          if (errorMessage) {
+              errorMessage.remove();
+          }
+      }
+
+  }
+
+
+/**
+ * Clears the subtask container when the clear button is clicked.
+ */
+  function clearSubtasksContainer() {
+    document.getElementById('edit-subtask-item-wrapper').innerHTML = "";
+    document.getElementById('padding-placeholder').classList.remove('d-none')
+  }
+
+/**
+ * Clears the subtask container in the board add task dialog field.
+ */
+  function clearSubtasksContainerDialog() {
+    document.getElementById('edit-subtask-item-wrapper-dialog').innerHTML = ""; 
+  }
+
+  </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#accountExists">accountExists</a></li><li><a href="global.html#activateAssignedContacts">activateAssignedContacts</a></li><li><a href="global.html#addEntertoSubTasks">addEntertoSubTasks</a></li><li><a href="global.html#addNewSubtask">addNewSubtask</a></li><li><a href="global.html#addOpenAddTaskToButtons">addOpenAddTaskToButtons</a></li><li><a href="global.html#addnewTask">addnewTask</a></li><li><a href="global.html#allFilledFalse">allFilledFalse</a></li><li><a href="global.html#allFilledTrue">allFilledTrue</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#animateGreeting">animateGreeting</a></li><li><a href="global.html#applyGreyScreen">applyGreyScreen</a></li><li><a href="global.html#applyRandomColor">applyRandomColor</a></li><li><a href="global.html#applyTaskStyles">applyTaskStyles</a></li><li><a href="global.html#assignedPersonsDetailsHtml">assignedPersonsDetailsHtml</a></li><li><a href="global.html#assignedPersonsEditHtml">assignedPersonsEditHtml</a></li><li><a href="global.html#autofillLogin">autofillLogin</a></li><li><a href="global.html#avatarHtml">avatarHtml</a></li><li><a href="global.html#blurListener">blurListener</a></li><li><a href="global.html#blurListenerDialog">blurListenerDialog</a></li><li><a href="global.html#calculateSubtaskProgressOf">calculateSubtaskProgressOf</a></li><li><a href="global.html#capitaliseFirstLetters">capitaliseFirstLetters</a></li><li><a href="global.html#catgeoryClickOutsideclose">catgeoryClickOutsideclose</a></li><li><a href="global.html#changeContactItemColor">changeContactItemColor</a></li><li><a href="global.html#checkCategoryfield">checkCategoryfield</a></li><li><a href="global.html#checkIfFormFilled">checkIfFormFilled</a></li><li><a href="global.html#clearForm">clearForm</a></li><li><a href="global.html#clearFormContactStyle">clearFormContactStyle</a></li><li><a href="global.html#clearFormPrio">clearFormPrio</a></li><li><a href="global.html#clearInputs">clearInputs</a></li><li><a href="global.html#clearLocalstorage">clearLocalstorage</a></li><li><a href="global.html#clearSubtasksContainer">clearSubtasksContainer</a></li><li><a href="global.html#clearSubtasksContainerDialog">clearSubtasksContainerDialog</a></li><li><a href="global.html#closeAddContactPage">closeAddContactPage</a></li><li><a href="global.html#closeAddTaskPopUp">closeAddTaskPopUp</a></li><li><a href="global.html#closeContactModal">closeContactModal</a></li><li><a href="global.html#closeContactOptions">closeContactOptions</a></li><li><a href="global.html#closeContactWindow">closeContactWindow</a></li><li><a href="global.html#closeDetails">closeDetails</a></li><li><a href="global.html#closeSignUp">closeSignUp</a></li><li><a href="global.html#compareRegistrationPasswords">compareRegistrationPasswords</a></li><li><a href="global.html#contactDetailsHTML">contactDetailsHTML</a></li><li><a href="global.html#convertArrayToObject">convertArrayToObject</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#createContactLetterHTML">createContactLetterHTML</a></li><li><a href="global.html#createContactListHTML">createContactListHTML</a></li><li><a href="global.html#createSubtasks">createSubtasks</a></li><li><a href="global.html#createTaskObject">createTaskObject</a></li><li><a href="global.html#createUser">createUser</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteData">deleteData</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteTask">deleteTask</a></li><li><a href="global.html#discardNewSubtask">discardNewSubtask</a></li><li><a href="global.html#discardSubtaskInput">discardSubtaskInput</a></li><li><a href="global.html#dragTo">dragTo</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#emptyBottomOf">emptyBottomOf</a></li><li><a href="global.html#executeOnMaxWidth">executeOnMaxWidth</a></li><li><a href="global.html#executeOnMinWidth">executeOnMinWidth</a></li><li><a href="global.html#failureAnimation">failureAnimation</a></li><li><a href="global.html#focusListener">focusListener</a></li><li><a href="global.html#focusListenerDialog">focusListenerDialog</a></li><li><a href="global.html#forceLogout">forceLogout</a></li><li><a href="global.html#generateCircleProfiles">generateCircleProfiles</a></li><li><a href="global.html#generateCircleProfilesLine">generateCircleProfilesLine</a></li><li><a href="global.html#generateContactsHtml">generateContactsHtml</a></li><li><a href="global.html#generateDropBoxContacts">generateDropBoxContacts</a></li><li><a href="global.html#generateGreetingHtml">generateGreetingHtml</a></li><li><a href="global.html#generateTaskCard">generateTaskCard</a></li><li><a href="global.html#generateTaskDetailsHtml">generateTaskDetailsHtml</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#getCurrentFileName">getCurrentFileName</a></li><li><a href="global.html#getCurrentPriority">getCurrentPriority</a></li><li><a href="global.html#getDaytime">getDaytime</a></li><li><a href="global.html#getDeadline">getDeadline</a></li><li><a href="global.html#getSubtaskProgress">getSubtaskProgress</a></li><li><a href="global.html#greetAtLogin">greetAtLogin</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleButtonClickOnWidth">handleButtonClickOnWidth</a></li><li><a href="global.html#handleCheckBox">handleCheckBox</a></li><li><a href="global.html#handleEnter">handleEnter</a></li><li><a href="global.html#handleResize">handleResize</a></li><li><a href="global.html#hideContactListForMobile">hideContactListForMobile</a></li><li><a href="global.html#hideFieldsWhenNoSearch">hideFieldsWhenNoSearch</a></li><li><a href="global.html#hideMenu">hideMenu</a></li><li><a href="global.html#hideWindow">hideWindow</a></li><li><a href="global.html#includeHTML">includeHTML</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initBoard">initBoard</a></li><li><a href="global.html#initIndex">initIndex</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#initTaskDetails">initTaskDetails</a></li><li><a href="global.html#initials">initials</a></li><li><a href="global.html#isAfternoon">isAfternoon</a></li><li><a href="global.html#isEvening">isEvening</a></li><li><a href="global.html#isMorning">isMorning</a></li><li><a href="global.html#isNotEmpty">isNotEmpty</a></li><li><a href="global.html#isNotInPast">isNotInPast</a></li><li><a href="global.html#isSubtaskInputFocused">isSubtaskInputFocused</a></li><li><a href="global.html#limitLengthOf">limitLengthOf</a></li><li><a href="global.html#listAttachedSubtasks">listAttachedSubtasks</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mobileDeleteRules">mobileDeleteRules</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#onStartSelectMediumPrio">onStartSelectMediumPrio</a></li><li><a href="global.html#openAddContactPage">openAddContactPage</a></li><li><a href="global.html#openAddTask">openAddTask</a></li><li><a href="global.html#openContactDetails">openContactDetails</a></li><li><a href="global.html#openContactOptions">openContactOptions</a></li><li><a href="global.html#openCreatedContact">openCreatedContact</a></li><li><a href="global.html#openEditContactPage">openEditContactPage</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openListSearch">openListSearch</a></li><li><a href="global.html#openSignUp">openSignUp</a></li><li><a href="global.html#openSubtaskInput">openSubtaskInput</a></li><li><a href="global.html#openTaskDetails">openTaskDetails</a></li><li><a href="global.html#ownValidation">ownValidation</a></li><li><a href="global.html#passwordInputIcon">passwordInputIcon</a></li><li><a href="global.html#passwordInputMissmatch">passwordInputMissmatch</a></li><li><a href="global.html#postData">postData</a></li><li><a href="global.html#pressedCheckBoxStyle">pressedCheckBoxStyle</a></li><li><a href="global.html#priorityEqualImg">priorityEqualImg</a></li><li><a href="global.html#putContactInfoToEditDialog">putContactInfoToEditDialog</a></li><li><a href="global.html#putContactsToList">putContactsToList</a></li><li><a href="global.html#putData">putData</a></li><li><a href="global.html#putDataset">putDataset</a></li><li><a href="global.html#randomId">randomId</a></li><li><a href="global.html#readData">readData</a></li><li><a href="global.html#regularMenuPoint">regularMenuPoint</a></li><li><a href="global.html#removeContactFromInterface">removeContactFromInterface</a></li><li><a href="global.html#removeValidation">removeValidation</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderDetailsContactList">renderDetailsContactList</a></li><li><a href="global.html#renderEditView">renderEditView</a></li><li><a href="global.html#renderOpenSubtasks">renderOpenSubtasks</a></li><li><a href="global.html#renderTaskDetails">renderTaskDetails</a></li><li><a href="global.html#renderTasks">renderTasks</a></li><li><a href="global.html#rerenderTaskOnBoard">rerenderTaskOnBoard</a></li><li><a href="global.html#resetAssignedPersons">resetAssignedPersons</a></li><li><a href="global.html#resetDetailCardHtml">resetDetailCardHtml</a></li><li><a href="global.html#resetInputFields">resetInputFields</a></li><li><a href="global.html#resetPriorityButtons">resetPriorityButtons</a></li><li><a href="global.html#resultsAmountOf">resultsAmountOf</a></li><li><a href="global.html#returnToBoard">returnToBoard</a></li><li><a href="global.html#rotateTaskDragEnd">rotateTaskDragEnd</a></li><li><a href="global.html#rotateTaskDragStart">rotateTaskDragStart</a></li><li><a href="global.html#saveTaskUpdate">saveTaskUpdate</a></li><li><a href="global.html#scrollToLastSubtask">scrollToLastSubtask</a></li><li><a href="global.html#searchAndShowTasks">searchAndShowTasks</a></li><li><a href="global.html#searchContact">searchContact</a></li><li><a href="global.html#selectCategory">selectCategory</a></li><li><a href="global.html#setBottomTaskCardVisibility">setBottomTaskCardVisibility</a></li><li><a href="global.html#setDateMin">setDateMin</a></li><li><a href="global.html#setFocus">setFocus</a></li><li><a href="global.html#setMyAvatar">setMyAvatar</a></li><li><a href="global.html#setOpenUrgents">setOpenUrgents</a></li><li><a href="global.html#setPasswordCreateDesign">setPasswordCreateDesign</a></li><li><a href="global.html#setPasswordDesign">setPasswordDesign</a></li><li><a href="global.html#setPasswordValidationDesign">setPasswordValidationDesign</a></li><li><a href="global.html#setPrefixToKey">setPrefixToKey</a></li><li><a href="global.html#setPrio">setPrio</a></li><li><a href="global.html#setPriorityTo">setPriorityTo</a></li><li><a href="global.html#setupAvatarMenu">setupAvatarMenu</a></li><li><a href="global.html#setupListener">setupListener</a></li><li><a href="global.html#setupListenerForAddTasks">setupListenerForAddTasks</a></li><li><a href="global.html#setupListenerForAddTasksDialog">setupListenerForAddTasksDialog</a></li><li><a href="global.html#showCapitaliseFirstLetters">showCapitaliseFirstLetters</a></li><li><a href="global.html#showCreatedContactModal">showCreatedContactModal</a></li><li><a href="global.html#showDragArea">showDragArea</a></li><li><a href="global.html#showFieldsWhenSearch">showFieldsWhenSearch</a></li><li><a href="global.html#showOverlayMenu">showOverlayMenu</a></li><li><a href="global.html#showPopupTaskAdded">showPopupTaskAdded</a></li><li><a href="global.html#showSearchErrors">showSearchErrors</a></li><li><a href="global.html#signUpAnimation">signUpAnimation</a></li><li><a href="global.html#sortByAlphabet">sortByAlphabet</a></li><li><a href="global.html#startDrag">startDrag</a></li><li><a href="global.html#startScreenAnimation">startScreenAnimation</a></li><li><a href="global.html#stopEnterForm">stopEnterForm</a></li><li><a href="global.html#stopPropagation">stopPropagation</a></li><li><a href="global.html#stopStandardValidationMessage">stopStandardValidationMessage</a></li><li><a href="global.html#submitSignUp">submitSignUp</a></li><li><a href="global.html#successAnimation">successAnimation</a></li><li><a href="global.html#switchToAddTask">switchToAddTask</a></li><li><a href="global.html#textAreaSelected">textAreaSelected</a></li><li><a href="global.html#toggleCategoryDropBox">toggleCategoryDropBox</a></li><li><a href="global.html#toggleContactDropBox">toggleContactDropBox</a></li><li><a href="global.html#togglePasswordDesign">togglePasswordDesign</a></li><li><a href="global.html#togglePrivacy">togglePrivacy</a></li><li><a href="global.html#toggleRemember">toggleRemember</a></li><li><a href="global.html#toggleThisContact">toggleThisContact</a></li><li><a href="global.html#toggleVisibility">toggleVisibility</a></li><li><a href="global.html#unPressedCheckBoxStyle">unPressedCheckBoxStyle</a></li><li><a href="global.html#updateAssignedPersons">updateAssignedPersons</a></li><li><a href="global.html#updateBoard">updateBoard</a></li><li><a href="global.html#updateBoardCounters">updateBoardCounters</a></li><li><a href="global.html#updateMenu">updateMenu</a></li><li><a href="global.html#updateSingleSubtask">updateSingleSubtask</a></li><li><a href="global.html#updateSubtaskInput">updateSubtaskInput</a></li><li><a href="global.html#updateSubtasksArray">updateSubtasksArray</a></li><li><a href="global.html#updateTaskFields">updateTaskFields</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Sun Jul 14 2024 01:46:10 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
