@@ -242,7 +242,7 @@ function renderOpenSubtasks() {
 
 /**
  * add this, when a new subtask is submitted. This function must be called explicite.
- * param was added later make this function apple to be used from team-members.
+ * param was added later make this function able to be used from team-members.
  */
 function scrollToLastSubtask(specialTarget = '') {
     document.getElementById(`edit-view-scrollbar${specialTarget}`).lastElementChild.scrollIntoView({behavior: 'smooth', block: 'end'});
