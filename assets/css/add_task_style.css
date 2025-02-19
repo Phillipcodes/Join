@@ -298,6 +298,7 @@ select:focus {
 
 .content-wrapper {
   margin-left: 0;
+  position: relative;
 }
 
 .clear-btn {

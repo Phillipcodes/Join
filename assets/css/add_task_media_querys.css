@@ -275,6 +275,10 @@
     .add-task-container {
       height: 385px;
     }
+
+    .required-text {
+      bottom: 5px
+    }
   }
   
   @media (max-height: 765px) and (max-width: 1119px) and (min-width: 905px) {
