@@ -133,6 +133,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    
 }
 
 .login-buttons {
@@ -156,6 +157,12 @@
         max-height: 350px;
         overflow: scroll;
         transform: translate(-50%, -60%);
+        overflow-x: hidden;
+    }
+
+    .register-wrapper__hero  {
+        margin: 0;
+        gap:5px;
     }
 
     .document-links {
@@ -199,5 +206,14 @@
 
     .bordered-btn {
         font-size: 21px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .register-wrapper__hero  {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 35px;
+        margin-right: 25px
     }
 }
